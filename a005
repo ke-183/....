@@ -1,0 +1,22 @@
+#include <iostream>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+using namespace std;
+int main(int argc, char** argv) {
+	int T ;
+	
+	cin >> T ;
+	
+	while (T--){
+	
+	int a, b, c, d ;
+	
+	cin >> a >> b >> c >> d ;
+	{
+	if(a+d==b+c){cout << a <<" "<< b <<" "<< c <<" "<< d <<" "<< 2*d-c << endl ;}
+	
+	else if(a*d==b*c){cout << a <<" "<< b <<" "<< c <<" "<< d <<" "<< d*d/c << endl ;}
+	}
+	}
+	return 0;
+}
