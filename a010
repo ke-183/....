@@ -1,0 +1,43 @@
+#include <iostream>
+#include <math.h>
+#include <cmath>
+#include <iomanip>
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+using namespace std;
+
+int main(int argc, char** argv) {
+	
+	int a;
+	while(cin>>a){
+		for(int i=2;i<=a;i++){
+			int score=0;
+			while(a%i==0){
+				a/=i;//削減每一次的a值 
+				score++;
+			}
+			if(a==1){//表示當前的i為a的最大質因數 
+				if(score==0)
+					continue;
+				else if(score==1){
+					cout<<i;
+				}
+				else{
+					cout<<i<<"^"<<score;
+				}
+			}
+			else{
+				if(score==0)
+					continue;
+				else if(score==1){
+					cout<<i<<" * ";
+				}
+				else{
+					cout<<i<<"^"<<score<<" * ";
+				}
+			}
+		}
+		cout<<endl;
+	}
+	return 0;
+}
