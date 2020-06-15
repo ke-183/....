@@ -1,0 +1,98 @@
+#include<bits/stdc++.h>
+using namespace std;
+int numa[505],numb[505],ans[1005];
+string s;
+bool bigcmp(string a,string b){
+    if(a.length()>b.length())return 1;
+    else if(a.length()<b.length())return 0;
+    else{
+        int l=a.length();
+        for(int i=0;i<l;i++){
+            if(a[i]>b[i])return 1;
+            else if(a[i]<b[i])return 0;
+        }
+    }
+    return 1;
+}
+string bigplus(string,string);
+string bigminus(string,string);
+string bigcross(string,string);
+string bigdivision(string,string);
+int main(int argc, char** argv) {
+
+    ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    string a,b;char oper;
+    while(cin>>a>>oper>>b){
+        switch(oper){
+            case'+':cout<<bigplus(a,b)<<'\n';break;
+            case'-':
+                if(!bigcmp(a,b)){cout<<'-';swap(a,b);}
+                cout<<bigminus(a,b)<<'\n';break;
+            case'*':cout<<bigcross(a,b)<<'\n';break;
+            default:cout<<bigdivision(a,b)<<'\n';
+        }
+    }
+    return 0;
+}
+string bigplus(string a,string b){
+    memset(numa,0,sizeof(numa));
+    memset(numb,0,sizeof(numb));
+    memset(ans,0,sizeof(ans));
+    int la=a.length(),lb=b.length(),maxn=max(la,lb);
+    for(int i=0;i<la;i++)numa[i]=a[i]-'0';
+    for(int i=0;i<lb;i++)numb[i]=b[i]-'0';
+    reverse(numa,numa+la);
+    reverse(numb,numb+lb);
+    for(int i=0;i<maxn;i++)ans[i]=numa[i]+numb[i];
+    for(int i=0;i<maxn;i++){ans[i+1]+=ans[i]/10;ans[i]%=10;}
+    s.clear();maxn+=1;
+    while(ans[maxn]==0)maxn--;
+    for(int i=maxn;i>=0;i--)s+=(char)(ans[i]+'0');
+    return s;
+}
+string bigminus(string a,string b){
+    memset(numa,0,sizeof(numa));
+    memset(numb,0,sizeof(numb));
+    memset(ans,0,sizeof(ans));
+    int la=a.length(),lb=b.length(),maxn=max(la,lb);
+    for(int i=0;i<la;i++)numa[i]=a[i]-'0';
+    for(int i=0;i<lb;i++)numb[i]=b[i]-'0';
+    reverse(numa,numa+la);
+    reverse(numb,numb+lb);
+    for(int i=0;i<maxn;i++)ans[i]=numa[i]-numb[i];
+    for(int i=0;i<maxn;i++){while(ans[i]<0){ans[i]+=10;ans[i+1]--;}}
+    s.clear();
+    while(ans[maxn]==0&&maxn>0)maxn--;
+    for(int i=maxn;i>=0;i--)s+=(char)(ans[i]+'0');
+    return s;
+}
+string bigcross(string a,string b){
+    memset(numa,0,sizeof(numa));
+    memset(numb,0,sizeof(numb));
+    memset(ans,0,sizeof(ans));
+    int la=a.length(),lb=b.length(),p=la+lb+1;
+    for(int i=0;i<la;i++)numa[i]=a[i]-'0';
+    for(int i=0;i<lb;i++)numb[i]=b[i]-'0';
+    reverse(numa,numa+la);
+    reverse(numb,numb+lb);
+    for(int i=0;i<la;i++)for(int j=0;j<lb;j++)ans[i+j]+=numa[i]*numb[j];
+    for(int i=0;i<p-1;i++){ans[i+1]+=ans[i]/10;ans[i]%=10;}
+    s.clear();
+    while(ans[p]==0)p--;
+    for(int i=p;i>=0;i--)s+=(char)(ans[i]+'0');
+    return s;
+}
+string bigdivision(string a,string b){
+    string sans;
+    string sum;
+    int la=a.length(),go=0,p;
+    for(int i=0;i<la;i++){
+        sum+=a[i];p=0;
+        while(bigcmp(sum,b)){p++;sum=bigminus(sum,b);}
+        if(sum=="0")sum.clear();
+        if(p)go=1;
+        if(go||i==la-1)sans+=(char)(p+'0');
+    }
+    return sans;
+}
