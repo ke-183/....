@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(int argc, char** argv) {
+	
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int num[9][9];
+	while(cin>>num[0][0]){
+		for(int i=0;i<9;i++)
+			for(int j=0;j<9;j++){
+				if(!i&&!j)
+					continue;
+				cin>>num[i][j];
+			}
+		bool right=true;
+		for(int i=0;i<9;i++){
+			int sum=45;
+			for(int j=0;j<9;j++)
+				sum-=num[i][j];
+			if(sum!=0){
+				right=false;
+				break;
+			}
+		}
+		if(right)
+			for(int i=0;i<9;i++){
+				int sum=45;
+				for(int j=0;j<9;j++)
+					sum-=num[j][i];
+				if(sum!=0){
+					right=false;
+					break;
+				}
+			}
+		if(right)
+			for(int i=0;i<9;i+=3)
+				for(int j=0;j<9;j+=3){
+					int sum=45;
+					for(int k=i;k<i+3;k++)
+						for(int l=j;l<j+3;l++)
+							sum-=num[k][l];
+					if(sum!=0){
+						right=false;
+						break;
+					}
+				}
+		if(right)
+			cout<<"yes\n";
+		else
+			cout<<"no\n";
+	}
+	return 0;
+}
